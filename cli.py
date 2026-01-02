@@ -4,11 +4,11 @@ from indexer.score_saver import load_index
 
 
 def main():
-    print("Loading search index...")
+    print("Loading search index")
     tfidf_index = load_index()
 
     if tfidf_index is None:
-        print("Index not found. Building index (one-time)...")
+        print("Index not found. Building index")
         tfidf_index = build_tidf_indexer()
         print("Index built and saved.")
 
