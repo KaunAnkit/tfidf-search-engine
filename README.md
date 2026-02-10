@@ -1,232 +1,98 @@
 # TF-IDF Based Search Engine
 
-A search engine built from scratch that crawls real-world websites, indexes documents using an inverted index and TF-IDF scoring, and provides fast keyword-based search through a command-line interface.
+## Overview
+
+This project implements classical information retrieval from scratch. It crawls real-world websites, extracts content, builds an inverted index with TF-IDF scoring, and enables efficient document search without relying on machine learning.
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Node.js](https://img.shields.io/badge/Node.js-v16.14.0-green)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-
----
-
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [How It Works](#how-it-works)
-- [Installation](#installation)
-- [How to Run](#how-to-run)
-- [Folder Structure](#folder-structure)
-- [Indexing & Ranking](#indexing--ranking)
-- [Design Decisions](#design-decisions)
-- [Future Improvements](#future-improvements)
-- [License](#license)
-- [Author](#author)
-
----
-
-## Project Overview
-
-This project implements a **classical information retrieval search engine** from scratch.  
-It crawls websites, extracts and cleans text content, builds an inverted index, computes TF-IDF scores for ranking, and allows users to search documents via a CLI.
-
-> ⚠️ This project focuses on **statistical IR (TF-IDF)**, not machine learning.  
-> Semantic and ML-based ranking are listed as future extensions.
-
----
 
 ## Features
 
-- ✅ Web crawler with BFS traversal and depth control
-- ✅ HTML parsing and text cleaning
-- ✅ SQLite-based document storage
-- ✅ Inverted index construction
-- ✅ TF-IDF scoring for relevance ranking
-- ✅ Persisted index for fast startup
-- ✅ Command-line interface (CLI) search
-- ✅ Modular and extensible architecture
+- Web crawler with breadth-first traversal and depth control
+- HTML parsing and text normalization
+- SQLite-based document storage
+- Inverted index with TF-IDF ranking
+- Persistent index storage for fast retrieval
+- Command-line search interface
+- Web-based search UI
+- Node.js API server with MongoDB integration
 
----
-
-## How It Works
-
-### 1️⃣ Crawling
-- Starts from seed URLs
-- Crawls pages using breadth-first search (BFS)
-- Extracts visible text and outgoing links
-- Avoids duplicate URLs
-
-### 2️⃣ Indexing
-- Tokenizes cleaned text
-- Builds an inverted index (`word → {doc_id: frequency}`)
-- Computes TF-IDF scores
-- Persists index to disk for reuse
-
-### 3️⃣ Searching
-- Loads persisted index
-- Tokenizes user query
-- Aggregates TF-IDF scores
-- Returns ranked documents
-
----
+## Architecture
+```
+crawler/     → Web crawling, HTML parsing, text cleaning
+indexer/     → Tokenization, TF-IDF computation, index persistence
+storage/     → SQLite database layer
+backend/     → Search orchestration
+server/      → Node.js/Express API with MongoDB
+```
 
 ## Installation
-
-### 1️⃣ Clone the repository
-
 ```bash
 git clone https://github.com/KaunAnkit/tfidf-search-engine.git
 cd tfidf-search-engine
-```
-
-### 2️⃣ Install dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
----
+## Usage
 
-## How to Run
-
-### Initialize database and crawl data
-
+### 1. Crawl and index documents
 ```bash
 python run_crawler.py
 ```
 
-### Start the CLI search engine
-
+### 2. Search via CLI
 ```bash
 python cli.py
 ```
 
-### Example
-
-```
-Search (type 'exit' to quit): cascade
-1. CSS-Tricks - A Website About Making Websites
-   https://css-tricks.com
-   score: 0.0062
-
-
-Search (type 'exit' to quit): python
-1. 3.14.2 Documentation
-   https://docs.python.org
-   score: 0.1335
-
-2. Python Tutorials – Real Python
-   https://realpython.com
-   score: 0.0765
-
-3. freeCodeCamp Programming Tutorials: Python, JavaScript, Git & More
-   https://www.freecodecamp.org/news
-   score: 0.0185
-
-4. Machine Learning Mastery
-   https://machinelearningmastery.com
-   score: 0.0080
-
-5. scikit-learn: machine learning in Python — scikit-learn 1.8.0 documentation
-   https://scikit-learn.org/stable
-   score: 0.0067
-
-6. FastAPI
-   https://fastapi.tiangolo.com
-   score: 0.0058
-
-7. pandas documentation — pandas 2.3.3 documentation
-   https://pandas.pydata.org/docs
-   score: 0.0044
-
-8. AWS Blogs - Cloud news & innovation | Amazon Web Services (AWS)
-   https://aws.amazon.com/blogs
-   score: 0.0039
-
-9. Engineering at Meta - Engineering at Meta Blog
-   https://engineering.fb.com
-   score: 0.0027
-
-10. Andrej Karpathy blog
-   https://karpathy.github.io
-   score: 0.0026
+### 3. Run the search service
+```bash
+python search_service.py
 ```
 
----
+### 4. Optional: Sync with MongoDB
+```bash
+# Configure .env with MongoDB connection string
+python send_to_node.py
 
-## Folder Structure
-
-```
-tfidf-search-engine/
-│
-├── cli.py          # Command-line interface
-├── run_crawler.py  # Script to initialize database and run crawler
-├── LICENSE
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── backend/        # Search orchestration
-├── crawler/        # Crawling, parsing, cleaning
-├── indexer/        # Tokenization, TF, IDF, TF-IDF indexing
-├── storage/        # SQLite database access
-└── data/           # Database and persisted index (ignored in git)
+# Start Node.js server
+cd server
+npm install
+node src/server.js
 ```
 
----
+## How It Works
 
-## Indexing & Ranking
+**Crawling**: BFS traversal starting from seed URLs, extracting text and links while avoiding duplicates.
 
-### TF-IDF Formula
+**Indexing**: Tokenizes documents, builds an inverted index mapping terms to documents with frequency counts.
 
-**Term Frequency (TF)**
+**Ranking**: Computes TF-IDF scores where:
+- TF = term frequency in document / total terms in document
+- IDF = log(total documents / documents containing term)
+- Score = TF × IDF
 
-```
-TF = (count of term in document) / (total words in document)
-```
+**Search**: Aggregates TF-IDF scores across query terms and returns ranked results.
 
-**Inverse Document Frequency (IDF)**
+## Configuration
 
-```
-IDF = log(total_documents / documents_containing_term)
-```
+Modify seed URLs in `run_crawler.py` to crawl different domains. Adjust `max_pages` and `max_depth` to control crawl scope.
 
-**TF-IDF Score**
+## Future Enhancements
 
-```
-TF-IDF = TF × IDF
-```
-
-Documents are ranked based on cumulative TF-IDF scores for query terms.
-
----
-
-## Design Decisions
-
-- Offline indexing, online querying for performance
-- Persisted index to avoid recomputation
-- SQLite used for simplicity and reliability
-- Modular design to allow future extensions
-- No ML dependency in core ranking logic
-
----
-
-## Future Improvements
-
-- Stopword removal and stemming
-- Domain-based ranking
-- Page importance scoring
+- Stopword filtering and stemming
+- PageRank-style authority scoring
 - Semantic search with embeddings
-- Web-based frontend
-- Precision / Recall evaluation metrics
-
----
+- Query expansion and spell correction
+- Evaluation metrics (precision, recall, MAP)
 
 ## License
 
-This project is licensed under the MIT License.
-
----
+MIT License - see LICENSE file for details.
 
 ## Author
 
 Ankit Jha  
-GitHub: KaunAnkit
-
-⭐ If you find this project useful, consider starring the repository!
+[GitHub](https://github.com/KaunAnkit)
