@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-
+import os
 from backend.final_search import final_search
 from indexer.score_saver import load_index
 
