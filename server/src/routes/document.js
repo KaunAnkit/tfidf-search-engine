@@ -1,10 +1,9 @@
-const express = require("express")
+const express = require("express");
+const mongoose = require("mongoose");
 
-const router = express.Router()
+const router = express.Router();
+const Document = require("../models/document");
 
-const Document = require("../models/document")
-
-const totalReceived = documents.length;
 
 
 router.post("/", async(req,res) => {

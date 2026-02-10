@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TF-IDF Search Engine</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="container">
+    <header class="hero">
+      <h1 class="logo">COde<span>Search</span></h1>
+      <p class="tagline">Information retrieval powered by TF-IDF Vectorization.</p>
+
+      <div class="search-box">
+        <input type="text" id="query" placeholder="Search documentation..." autocomplete="off" />
+        <button id="searchBtn" class="btn primary">Search</button>
+      </div>
+
+      <div id="status"></div>
+    </header>
+
+    <ul id="results"></ul>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

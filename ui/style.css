@@ -1,0 +1,145 @@
+:root {
+  --bg: #0b0b0b;
+  --border: #222222;
+  --text-main: #eeeeee;
+  --text-muted: #777777;
+  --accent: #ffffff;
+  --font-mono: 'JetBrains Mono', monospace;
+  --sidebar-gap: 100px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Cyber Grid Effect */
+.grid-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+}
+
+.container {
+  margin-left: var(--sidebar-gap);
+  padding: 80px 40px;
+  max-width: 900px;
+}
+
+/* Side Text Label */
+.container::before {
+  content: "ENGINE TYPE: TF-IDF / VECTOR SPACE";
+  position: fixed;
+  left: 30px;
+  top: 50%;
+  transform: rotate(-90deg) translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  opacity: 0.6;
+}
+
+.logo { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
+.logo span { color: var(--text-muted); font-weight: 400; }
+.tagline { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
+
+/* Search Box Stylings */
+.search-box {
+  display: flex;
+  gap: 15px;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus { border-color: var(--accent); }
+
+.btn.primary {
+  background: var(--text-main);
+  color: var(--bg);
+  border: none;
+  padding: 0 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 20px;
+  min-height: 20px;
+}
+
+/* Results Stylings */
+#results {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.result {
+  margin-bottom: 40px;
+  border-left: 1px solid var(--border);
+  padding-left: 20px;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.result a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.result a:hover { opacity: 0.7; }
+
+.url {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  word-break: break-all;
+  margin-bottom: 10px;
+}
+
+.score {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .container { margin-left: 0; padding: 40px 20px; }
+  .container::before { display: none; }
+}
