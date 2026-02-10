@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5500/search";
+const API_URL = "https://tfidf-node-api.onrender.com/search";
 
 const searchBtn = document.getElementById("searchBtn");
 const queryInput = document.getElementById("query");
