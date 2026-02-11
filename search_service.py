@@ -26,6 +26,14 @@ def search():
 
     return jsonify(results)
 
+@app.route("/")
+def home():
+    return {
+        "service": "TF-IDF Search Service",
+        "status": "running"
+    }
+
+
 
 if __name__ == "__main__":
     app.run(
