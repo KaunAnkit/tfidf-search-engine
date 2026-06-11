@@ -15,18 +15,18 @@ try:
     db = client["search_engine"]
     collection = db["documents"]
     
-    # Count total documents
+    
     total_docs = collection.count_documents({})
     
-    print(f"📊 CRAWLER PROGRESS")
+    print(f"CRAWLER PROGRESS")
     print("=" * 50)
-    print(f"✅ Total Documents Crawled: {total_docs}")
+    print(f" Total Documents Crawled: {total_docs}")
     
     if total_docs == 0:
-        print("\n⏳ Crawler is still starting up or processing...")
+        print("\n Crawler is still starting up or processing...")
     else:
-        # Show recent documents
-        print(f"\n📝 Last 10 Documents Added:")
+        
+        print(f"\n Last 10 Documents Added:")
         print("-" * 50)
         
         docs = collection.find().sort("created_at", -1).limit(10)
@@ -39,9 +39,9 @@ try:
             print(f"   URL: {url}")
             print(f"   Added: {created}")
         
-        # Show database stats
+        
         print(f"\n" + "=" * 50)
-        print(f"📈 Database Size Stats:")
+        print(f"Database Size Stats:")
         stats = db.command("collStats", "documents")
         size_mb = stats.get('size', 0) / (1024 * 1024)
         print(f"   Collection Size: {size_mb:.2f} MB")
@@ -50,5 +50,5 @@ try:
     client.close()
 
 except Exception as e:
-    print(f"❌ Error: {e}")
+    print(f"Error: {e}")
     print("\nMake sure MongoDB Atlas is accessible and MONGODB_URL is set in .env")

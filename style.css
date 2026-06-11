@@ -38,7 +38,7 @@ body {
   pointer-events: none;
 }
 
-/* Base Container (Initial Centered State) */
+
 .container {
   max-width: 680px;
   margin: 0 auto;
@@ -53,16 +53,16 @@ body {
   z-index: 1;
 }
 
-/* ====== FIX: Active Search State (Flushes content to the left margin) ====== */
+
 .container.has-searched {
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: 40px;
-  padding-left: 40px; /* Exact spacing from the far left screen edge */
+  padding-left: 40px;
   padding-right: 40px;
-  margin-left: 0;     /* Removes center-alignment completely */
-  margin-right: auto; /* Pushes any remaining screen void to the right side */
-  max-width: 720px;   /* Constrains the content width so it looks crisp on ultra-wide monitors */
+  margin-left: 0;     
+  margin-right: auto; 
+  max-width: 720px;  
 }
 
 .hero {
@@ -78,7 +78,7 @@ body {
   text-align: left;
 }
 
-/* Typography & Logo */
+
 .brand-wrapper {
   width: 100%;
 }
@@ -115,7 +115,7 @@ body {
   display: none;
 }
 
-/* Search Bar Input Container */
+
 .search-box-wrapper {
   width: 100%;
 }
@@ -159,7 +159,6 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 
-/* Buttons & Elements */
 .btn.primary {
   display: flex;
   align-items: center;
@@ -195,7 +194,7 @@ body {
   min-height: 18px;
 }
 
-/* ====== Results Panel ====== */
+
 .results-area {
   width: 100%;
   display: none;
@@ -282,7 +281,7 @@ body {
   }
 }
 
-/* Responsive breakpoint fallback */
+
 @media (max-width: 600px) {
   .container.has-searched {
     padding-left: 20px;
