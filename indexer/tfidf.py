@@ -4,10 +4,20 @@ from storage.storage import get_all_documents
 from collections import defaultdict, Counter
 import math
 
+# Cache to avoid recomputing
+_inverted_index_cache = None
+_doc_lengths_cache = None
 
 def tfidf(word, doc_id):
-    inverted_index = count_tokenizer()
-    doc_lengths = compute_doc_lengths()
+    global _inverted_index_cache, _doc_lengths_cache
+    
+    if _inverted_index_cache is None:
+        _inverted_index_cache = count_tokenizer()
+    if _doc_lengths_cache is None:
+        _doc_lengths_cache = compute_doc_lengths()
+    
+    inverted_index = _inverted_index_cache
+    doc_lengths = _doc_lengths_cache
 
     total_docs = len(doc_lengths)
 

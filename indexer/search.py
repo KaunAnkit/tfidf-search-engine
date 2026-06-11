@@ -1,5 +1,4 @@
 from collections import Counter
-from storage.storage import get_detail_document
 
 def search(query, tfidf_index, top_k=10):
     
