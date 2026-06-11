@@ -8,10 +8,15 @@ def final_search(query, tfidf_index, top_k=10):
     results = []
 
     for doc_id, score in ranked_docs:
+
         detail = get_detail_document(doc_id)
+
         if detail:
+
             title, url = detail
+
             results.append({
+                "doc_id": doc_id,
                 "title": title,
                 "url": url,
                 "score": score
