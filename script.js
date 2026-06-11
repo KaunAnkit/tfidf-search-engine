@@ -4,6 +4,7 @@ const searchBtn = document.getElementById("searchBtn");
 const queryInput = document.getElementById("query");
 const resultsEl = document.getElementById("results");
 const statusEl = document.getElementById("status");
+const containerEl = document.getElementById("searchContainer");
 
 searchBtn.addEventListener("click", search);
 queryInput.addEventListener("keydown", (e) => {
@@ -15,8 +16,11 @@ async function search() {
 
   if (!query) return;
 
+  // Triggers leftward and vertical alignment layout changes
+  containerEl.classList.add("has-searched");
+  
   resultsEl.innerHTML = "";
-  statusEl.textContent = "Searching...";
+  statusEl.textContent = "Searching database...";
 
   try {
     const res = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
@@ -27,17 +31,26 @@ async function search() {
       return;
     }
 
-    statusEl.textContent = `Found ${data.results.length} results`;
+    statusEl.textContent = `Found ${data.results.length} results matching your query`;
 
-    data.results.forEach(item => {
+    data.results.forEach((item, index) => {
       const li = document.createElement("li");
       li.className = "result";
+      li.style.animationDelay = `${index * 0.03}s`;
 
-      // Logic matches your original template precisely
+      // Extract hostname for meta text display and favicon retrieval
+      const parsedUrl = new URL(item.url);
+      const hostname = parsedUrl.hostname;
+      const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+
       li.innerHTML = `
-        <a href="${item.url}" target="_blank">${item.title}</a>
-        <div class="url">${item.url}</div>
-        <div class="score">score: ${item.score.toFixed(4)}</div>
+        <div class="result-identity">
+          <img class="favicon" src="${faviconUrl}" alt="" onerror="this.style.display='none'">
+          <span class="domain-name">${hostname}</span>
+          <div class="score-badge">Match: ${(item.score * 100).toFixed(1)}%</div>
+        </div>
+        <a href="${item.url}" target="_blank" class="result-title">${item.title}</a>
+        <div class="url-display">${item.url}</div>
       `;
 
       resultsEl.appendChild(li);

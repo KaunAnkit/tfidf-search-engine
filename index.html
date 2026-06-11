@@ -5,24 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RETRIEVAL</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Syne:wght@800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="grid-bg"></div>
-  <div class="container">
-    <header class="hero">
-      <h1 class="logo">RETRIEVAL<span></span></h1>
-      <p class="tagline">Search Engine</p>
+  <div class="glow"></div>
 
-      <div class="search-box">
-        <input type="text" id="query" placeholder="Search documentation..." autocomplete="off" />
-        <button id="searchBtn" class="btn primary" type="button">Search</button>
+  <div class="container" id="searchContainer">
+    <header class="hero">
+      <div class="brand-wrapper">
+        <h1 class="logo">RETRIEVAL</h1>
+        <p class="tagline"></p>
+      </div>
+
+      <div class="search-box-wrapper">
+        <div class="search-box">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="query" placeholder="Ask related programming, or search documentation..." autocomplete="off" />
+          <button id="searchBtn" class="btn primary" type="button">
+            <span>Search</span>
+            <kbd class="shortcut">↵</kbd>
+          </button>
+        </div>
       </div>
 
       <div id="status"></div>
     </header>
 
-    <ul id="results"></ul>
+    <main class="results-area">
+      <ul id="results"></ul>
+    </main>
   </div>
   
   <script src="script.js"></script>
