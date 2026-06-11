@@ -33,38 +33,38 @@ def search():
 
     return jsonify(results)
 
-@app.route("/recommend")
-def recommend():
+# @app.route("/recommend")
+# def recommend():
 
-    doc_id = request.args.get("doc_id")
+#     doc_id = request.args.get("doc_id")
 
-    if not doc_id:
-        return jsonify({"error": "doc_id parameter is required"}), 400
+#     if not doc_id:
+#         return jsonify({"error": "doc_id parameter is required"}), 400
     
-    try:
-        top_n = min(
-            max(int(request.args.get("n", 5)), 1),
-            20
-        )
-    except ValueError:
-        top_n = 5
+#     try:
+#         top_n = min(
+#             max(int(request.args.get("n", 5)), 1),
+#             20
+#         )
+#     except ValueError:
+#         top_n = 5
 
-    try:
-        recs = get_similar_docs(doc_id, doc_matrix, doc_ids, top_n=top_n)
-    except ValueError:
-        return jsonify({"error": f"doc_id not found in index: {doc_id}"}), 404
+#     try:
+#         recs = get_similar_docs(doc_id, doc_matrix, doc_ids, top_n=top_n)
+#     except ValueError:
+#         return jsonify({"error": f"doc_id not found in index: {doc_id}"}), 404
     
-    enriched = []
-    for r in recs:
-        detail = get_detail_document(r["doc_id"])   
-        enriched.append({
-            "doc_id": r["doc_id"],
-            "score":  r["score"],
-            "title":  detail[0] if detail else r["doc_id"],
-            "url":    detail[1] if detail else None,
-        })
+#     enriched = []
+#     for r in recs:
+#         detail = get_detail_document(r["doc_id"])   
+#         enriched.append({
+#             "doc_id": r["doc_id"],
+#             "score":  r["score"],
+#             "title":  detail[0] if detail else r["doc_id"],
+#             "url":    detail[1] if detail else None,
+#         })
  
-    return jsonify({"query_doc_id": doc_id, "recommendations": enriched})
+#     return jsonify({"query_doc_id": doc_id, "recommendations": enriched})
 
 
 
