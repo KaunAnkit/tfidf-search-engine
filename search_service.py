@@ -14,8 +14,8 @@ print("TF-IDF index loaded")
 
 
 print("Building document vectors for recommender...")
-doc_matrix, doc_ids, vocab = build_doc_vector(tfidf_index)
-print(f"Recommender ready — {len(doc_ids)} docs X {len(vocab)} terms")
+# doc_matrix, doc_ids, vocab = build_doc_vector(tfidf_index)
+# print(f"Recommender ready — {len(doc_ids)} docs X {len(vocab)} terms")
 
 @app.route("/health")
 def health():
