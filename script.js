@@ -6,6 +6,17 @@ const resultsEl = document.getElementById("results");
 const statusEl = document.getElementById("status");
 const containerEl = document.getElementById("searchContainer");
 
+const SUGGEST_URL =
+  "https://tfidf-search-engine-1.onrender.com/suggest";
+
+const suggestionsEl =
+  document.getElementById("suggestions");
+
+  queryInput.addEventListener(
+  "input",
+  loadSuggestions
+);
+
 searchBtn.addEventListener("click", search);
 queryInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") search();
@@ -14,7 +25,12 @@ queryInput.addEventListener("keydown", (e) => {
 async function search() {
   const query = queryInput.value.trim();
 
+  
+
   if (!query) return;
+
+  suggestionsEl.innerHTML = "";
+  suggestionsEl.classList.remove("show");
 
   // Triggers leftward and vertical alignment layout changes
   containerEl.classList.add("has-searched");
@@ -60,4 +76,68 @@ async function search() {
     console.error(err);
     statusEl.textContent = "Search failed. Is the server running?";
   }
+}
+
+async function loadSuggestions() {
+
+  const query =
+    queryInput.value.trim();
+
+  if (query.length < 2) {
+
+    suggestionsEl.innerHTML = "";
+    suggestionsEl.classList.remove("show");
+
+    return;
+  }
+
+  try {
+
+    const res = await fetch(
+      `${SUGGEST_URL}?q=${encodeURIComponent(query)}`
+    );
+
+    const data = await res.json();
+
+    renderSuggestions(data);
+
+  } catch(err) {
+
+    console.error(err);
+  }
+}
+
+function renderSuggestions(items) {
+
+  suggestionsEl.innerHTML = "";
+
+  if (!items.length) {
+
+    suggestionsEl.classList.remove("show");
+    return;
+  }
+
+  items.forEach(item => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "suggestion-item";
+
+    div.textContent = item.title;
+
+    div.addEventListener("click", () => {
+
+      queryInput.value = item.title;
+
+      suggestionsEl.innerHTML = "";
+      suggestionsEl.classList.remove("show");
+
+      search();
+    });
+
+    suggestionsEl.appendChild(div);
+  });
+
+  suggestionsEl.classList.add("show");
 }

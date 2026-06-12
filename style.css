@@ -159,6 +159,48 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 
+.search-box-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  display: none;
+
+  z-index: 100;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.suggestions.show {
+  display: block;
+}
+
+.suggestion-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: background .15s ease;
+}
+
+.suggestion-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.suggestion-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
 .btn.primary {
   display: flex;
   align-items: center;
