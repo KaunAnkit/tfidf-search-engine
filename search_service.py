@@ -90,7 +90,10 @@ def home():
 @app.route("/suggest")
 def suggest():
 
-    q = request.args.get("q", "").lower().strip()
+    q = request.args.get(
+        "q",
+        ""
+    ).lower().strip()
 
     if len(q) < 2:
         return jsonify([])
