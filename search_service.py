@@ -15,7 +15,6 @@ CORS(app)
 
 from storage.storage import get_all_titles
 
-app = Flask(__name__)
 
 print("Loading TF-IDF index...")
 tfidf_index = load_index()
