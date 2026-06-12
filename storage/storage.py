@@ -94,15 +94,25 @@ def init_db_if_needed():
 
     
 def get_all_titles():
+    init_db_if_needed()
 
-    docs = get_all_documents()
+    try:
 
-    titles = []
+        documents = collection.find(
+            {},
+            {"title": 1}
+        )
 
-    for doc in docs:
+        titles = []
 
-        # adjust depending on your structure
-        titles.append(doc["title"])
+        for doc in documents:
 
-    return titles
+            if "title" in doc:
+                titles.append(doc["title"])
+
+        return titles
+
+    except Exception as e:
+        print(f"Error getting titles: {e}")
+        return []
 
