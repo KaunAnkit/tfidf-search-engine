@@ -189,8 +189,11 @@ body {
 .suggestion-item {
   padding: 12px 16px;
   cursor: pointer;
-  color: var(--text-main);
+  color: grey;
   transition: background .15s ease;
+
+  text-align: left;
+
 }
 
 .suggestion-item:hover {
