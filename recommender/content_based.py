@@ -17,8 +17,7 @@ def build_doc_term(tfidf_index):
     return doc_term
 
 
-def get_similar_doc()
-            
+
 
 
 
