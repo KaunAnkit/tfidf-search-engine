@@ -3,6 +3,13 @@ import os
 from backend.final_search import final_search
 from indexer.score_saver import load_index
 
+from flask_cors import CORS
+
+
+app = Flask(__name__)
+
+CORS(app)
+
 # from storage.storage import get_detail_document
 # from recommender.content_based import build_doc_vector, get_similar_docs
 
