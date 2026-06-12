@@ -93,4 +93,16 @@ def init_db_if_needed():
         init_db()
 
     
+def get_all_titles():
+
+    docs = get_all_documents()
+
+    titles = []
+
+    for doc in docs:
+
+        # adjust depending on your structure
+        titles.append(doc["title"])
+
+    return titles
 

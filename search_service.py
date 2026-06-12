@@ -6,16 +6,28 @@ from indexer.score_saver import load_index
 from storage.storage import get_detail_document
 from recommender.content_based import build_doc_vector, get_similar_docs
 
+from storage.storage import get_all_titles
+
 app = Flask(__name__)
 
 print("Loading TF-IDF index...")
 tfidf_index = load_index()
 print("TF-IDF index loaded")
 
+print("Loading titles...")
 
-print("Building document vectors for recommender...")
-# doc_matrix, doc_ids, vocab = build_doc_vector(tfidf_index)
-# print(f"Recommender ready — {len(doc_ids)} docs X {len(vocab)} terms")
+titles = get_all_titles()
+
+print(f"Loaded {len(titles)} titles")
+
+doc_set = set()
+
+for postings in tfidf_index.values():
+    doc_set.update(postings.keys())
+
+print("Documents:", len(doc_set))
+print("Terms:", len(tfidf_index))
+print(next(iter(tfidf_index.items())))
 
 @app.route("/health")
 def health():
@@ -75,7 +87,46 @@ def home():
         "status": "running"
     }
 
+@app.route("/suggest")
+def suggest():
 
+    q = request.args.get("q", "").lower().strip()
+
+    if len(q) < 2:
+        return jsonify([])
+
+    matches = []
+
+    for title in titles:
+
+        title_lower = title.lower()
+
+        score = 0
+
+        if title_lower.startswith(q):
+            score = 100
+
+        elif any(
+            word.startswith(q)
+            for word in title_lower.split()
+        ):
+            score = 50
+
+        elif q in title_lower:
+            score = 10
+
+        if score > 0:
+            matches.append({
+                "title": title,
+                "score": score
+            })
+
+    matches.sort(
+        key=lambda x: x["score"],
+        reverse=True
+    )
+
+    return jsonify(matches[:8])
 
 
 
